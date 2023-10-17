@@ -1,15 +1,17 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <PieChart />
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import PieChart from './components/PieChart.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld, PieChart
   }
 }
 </script>
