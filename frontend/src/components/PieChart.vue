@@ -7,8 +7,13 @@
 
     export default {
         name: 'PieChart',
-        mounted(){
+        async mounted(){
             console.log('Mounted');
+
+            const reponse = await fetch("http://localhost:8080/employe");
+            var json = await reponse.json();
+
+            console.log(json);
 
             const ctx = document.getElementById('myChart');
 
@@ -21,7 +26,7 @@
                     borderWidth: 1
                     }]
                 }
-                });
+            });
         }
     }
 </script>

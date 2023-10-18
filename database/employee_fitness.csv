@@ -1,0 +1,11 @@
+id;genre;age;categorie_socio_professionnelle;taux_participation;;;;;;
+1;Homme;28;Cadre supérieur;85 %;;;;;;
+2;Femme;34;Cadre;75 %;;;;;;
+3;Homme;45;Employé;60 %;;;;;;
+4;Femme;29;Cadre;90 %;;;;;;
+5;Homme;38;Employé;70 %;;;;;;
+6;Femme;42;Cadre supérieur;95 %;;;;;;
+7;Homme;51;Ouvrier;40 %;;;;;;
+8;Femme;31;Cadre;80 %;;;;;;
+9;Homme;55;Ouvrier;30 %;;;;;;
+10;Femme;37;Cadre;70 %;;;;;;
