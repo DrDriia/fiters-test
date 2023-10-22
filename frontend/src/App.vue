@@ -1,42 +1,66 @@
 <template>
   <div>
-    Hello ?
-    <select id="selectCat">
-      <option value="">Global</option>
-      <option value="genre">Genre</option>
-      <option value="categorie_socio_professionnelle">Poste</option>
-      <option value="id">Individuel</option>
-    </select>
-    <PieChart />
-    <BarParticipate />
-    <LinePerf />
+    <div id="firstElements">
+      <div class="vertical-center">
+        <Info />
+        <PieChart />
+      </div>
+    </div>
     <ScatterPerfPart />
+    <LinePerf />
+    <BarParticipate />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import PieChart from './components/PieCategory.vue'
-import BarParticipate from './components/BarParticipate.vue'
-import LinePerf from './components/LinePerf.vue'
-import ScatterPerfPart from './components/ScatterPerfPart.vue'
+import Info from './components/Info.vue'
+import PieChart from './components/charts/PieCategory.vue'
+import BarParticipate from './components/charts/BarParticipate.vue'
+import LinePerf from './components/charts/LinePerf.vue'
+import ScatterPerfPart from './components/charts/ScatterPerfPart.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld, PieChart, BarParticipate, LinePerf, ScatterPerfPart
+    Info, PieChart, BarParticipate, LinePerf, ScatterPerfPart
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#app div{
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  display:flex
+}
+
+#firstElements{
+  width:50%;
+  display:inline-block;
+  vertical-align: top;
+  align-items:center;
+  text-align:center;
+}
+
+.vertical-center{
+  height:100%;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+
+.chart{
+  display:inline-block;
+  width:40%;
+  margin:10px;
+  vertical-align: top;
+}
+
+@media (max-width: 850px) {
+  .chart, #firstElements{
+    width:90%;
+  }
+
+  .round{
+    width:50%;
+  }
 }
 </style>

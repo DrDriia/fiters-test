@@ -3,20 +3,34 @@ const Data = require('./dataModel');
 
 const router = express.Router();
 
-const strEmploye = "employee_fitness"
-const strPerformance = "evolution_progression_sportive_6mois"
-const dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
-const dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
+const strEmploye = "employee_fitness";
+const strPerformance = "evolution_progression_sportive_6mois";
 
-router.get('/employe', (req,res) => {
+// ROUTES POUR VOIR LES DONNEES SOUS FORMAT JSON
+
+router.get('/emp', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     res.status(200).json(dataEmploye);
 });
 
 router.get('/perf', (req,res) => {
+    let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
     res.status(200).json(dataPerformance);
 });
 
+// ROUTES CORRESPONDANT AUX REQUETES POUR LES GRAPHIQUES
+
+router.get('/employe', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
+    res.status(200).json([dataEmploye.length]);
+});
+
 router.get('/employe/:cat', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
+    if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
+        res.status(400).send('Catégorie inexistante');
+        return;
+    }
     let labels = [];
     let cpt = [];
 
@@ -28,12 +42,11 @@ router.get('/employe/:cat', (req,res) => {
         cpt[labels.indexOf(item[req.params.cat])] += 1;
     });
 
-    res.status(200).send([labels, cpt]);
+    res.status(200).send([labels, [{label:'Nombre',data:cpt}]]);
 });
 
-// BON FORMAT A PARTIR D'ICI
-
 router.get('/participate/', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     let datas = 0;
     let cpt = 0;
     
@@ -44,12 +57,15 @@ router.get('/participate/', (req,res) => {
 
     datas /= cpt;
 
-    res.status(200).send([['Taux de participation global'], [{data:datas}]]);
+    res.status(200).send([datas + " %"]);
 });
 
-// JUSTE PAS SUR CELUI-CI
-
 router.get('/participate/:cat', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
+    if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
+        res.status(400).send('Catégorie inexistante');
+        return;
+    }
     let labels = [];
     let datas = [];
     let cpt = [];
@@ -68,31 +84,38 @@ router.get('/participate/:cat', (req,res) => {
         datas[i] /= cpt[i];
     }
 
-    res.status(200).send([labels, [{data:datas}]]);
+    res.status(200).send([labels, [{label:'Taux de participation',data:datas}]]);
 });
 
 router.get('/performance/', (req,res) => {
+    let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
     let labels = [];
-    let datas = {label:'Evolution globale',data:[]};
+    let datas = [];
     let cpt = [];
     
     dataPerformance.forEach((item) => {
         if (!labels.includes(item.mois)){
             labels.push(item.mois);
-            datas.data.push(0);
+            datas.push(0);
             cpt.push(0);
         }
-        datas.data[labels.indexOf(item.mois)] += parseInt(item.progression_sportive);
+        datas[labels.indexOf(item.mois)] += parseInt(item.progression_sportive);
         cpt[labels.indexOf(item.mois)] += 1;
     });
 
     for (let i = 0;i<labels.length;++i)
-        datas.data[i] /= cpt[i];
+        datas[i] /= cpt[i];
 
-    res.status(200).send([labels, [datas]]);
+    res.status(200).send([labels, [{label:'Global',data:datas}]]);
 });
 
 router.get('/performance/:cat', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
+    let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
+    if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
+        res.status(400).send('Catégorie inexistante');
+        return;
+    }
     let labels = [];
     let labelsCat = [];
     let datas = [];
@@ -106,7 +129,12 @@ router.get('/performance/:cat', (req,res) => {
                 cpt[i].push(0);
             }
         }
-        let cat = dataEmploye.find(employe => employe.id === item.employe_id)[req.params.cat];
+        let emp = dataEmploye.find(employe => employe.id === item.employe_id);
+        if (emp === null || emp === undefined){
+            res.status(409).send("Employé introuvable");
+            return;
+        }
+        let cat = emp[req.params.cat];
         if (!labelsCat.includes(cat)){
             labelsCat.push(cat);
             let list = [];
@@ -128,6 +156,8 @@ router.get('/performance/:cat', (req,res) => {
 });
 
 router.get('/perfpart', (req,res) => {
+    let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
+    let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
     let datas = [];
     
     dataEmploye.forEach((item) => {

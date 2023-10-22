@@ -10,9 +10,15 @@ class Csv{
         let errors = fileCSV.errors; // Erreurs à gérer
         
         let datas = fileCSV.data;
+        
+        if (datas.length == 0)
+            return [];
 
         let labels = [];
-        datas[0].forEach((title) => (title != '') ? labels.push(title) : 0);
+        datas[0].forEach((title) => {
+            if (title != '')
+                labels.push(title);
+        });
 
         let data = [];
         for (var i = 1;i<datas.length;++i){
