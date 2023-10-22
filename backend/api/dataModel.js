@@ -5,9 +5,6 @@ class Csv{
     static getCsv(file){
         let csv = fs.readFileSync(file, "utf-8");
         let fileCSV = Papa.parse(csv, {encoding: "utf-8"});
-
-        let meta = fileCSV.meta;
-        let errors = fileCSV.errors; // Erreurs à gérer
         
         let datas = fileCSV.data;
         

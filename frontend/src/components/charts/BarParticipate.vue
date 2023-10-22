@@ -8,7 +8,7 @@
 <script>
     const Data = require('../../js/getData');
 
-    const request = 'participate/';
+    const request = Data.PARTICIPATE;
     const type = 'bar';
     const label = 'Taux de participation moyen';
     var options = { 
@@ -24,21 +24,14 @@
                             text: label
                         }
                     }};
-    var actualCat = '';
 
     export default {
         name: 'BarParticipate',
         async mounted(){
-            actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+            await Data.getData(Data.URL + request, type, options, label);
         }
     }
     setInterval(async function addData(){
-        actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+        await Data.getData(Data.URL + request, type, options, label);
     }, 1000);
 </script>
-
-<style scoped>
-    .block{
-        width:80%;
-    }
-</style>

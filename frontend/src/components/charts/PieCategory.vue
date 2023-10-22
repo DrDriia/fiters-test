@@ -8,19 +8,18 @@
 <script>
     const Data = require('../../js/getData');
 
-    const request = 'employe/';
+    const request = Data.CATEGORY;
     const type = 'pie';
     const label = "Nombre d'employés"
     var options = {};
-    var actualCat = '';
 
     export default {
         name: 'PieChart',
         async mounted(){
-            actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+            await Data.getData(Data.URL + request, type, options, label);
         }
     }
     setInterval(async function addData(){
-        actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+        await Data.getData(Data.URL + request, type, options, label);
     }, 1000);
 </script>

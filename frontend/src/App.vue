@@ -3,7 +3,7 @@
     <div id="firstElements">
       <div class="vertical-center">
         <Info />
-        <PieChart />
+        <PieCategory />
       </div>
     </div>
     <ScatterPerfPart />
@@ -14,7 +14,7 @@
 
 <script>
 import Info from './components/Info.vue'
-import PieChart from './components/charts/PieCategory.vue'
+import PieCategory from './components/charts/PieCategory.vue'
 import BarParticipate from './components/charts/BarParticipate.vue'
 import LinePerf from './components/charts/LinePerf.vue'
 import ScatterPerfPart from './components/charts/ScatterPerfPart.vue'
@@ -22,7 +22,7 @@ import ScatterPerfPart from './components/charts/ScatterPerfPart.vue'
 export default {
   name: 'App',
   components: {
-    Info, PieChart, BarParticipate, LinePerf, ScatterPerfPart
+    Info, PieCategory, BarParticipate, LinePerf, ScatterPerfPart
   }
 }
 </script>

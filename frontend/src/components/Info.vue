@@ -2,18 +2,15 @@
   <div class="block">
     <div id="center-info">
       <div>
-        <div>
-          <h3>Tableau de bord</h3>
-          <p>Récapitulatif du taux de participation et de l'évolution sportive mensuelle de chaque employé.</p>
-        </div>
-        <select id="selectCat">
-          <option value="">Trier par...</option>
-          <option value="genre">Genre</option>
-          <option value="categorie_socio_professionnelle">Catégorie socio-professionnelle</option>
-          <option value="id">Individu</option>
-        </select>
+        <h3>Tableau de bord</h3>
+        <p>Récapitulatif du taux de participation et de l'évolution sportive mensuelle de chaque employé.</p>
       </div>
-
+      <select id="selectCat">
+        <option value="">Trier par...</option>
+        <option value="genre">Genre</option>
+        <option value="categorie_socio_professionnelle">Catégorie socio-professionnelle</option>
+        <option value="id">Individu</option>
+      </select>
     </div>
   </div>
 </template>
@@ -56,5 +53,12 @@ export default {
 
 #selectCat:hover {
   background-color: #FFFFFFEE;
+}
+
+#offline{
+  margin:0;
+  margin-top:10px;
+  font-weight:350;
+  color:#FFFFFFBB;
 }
 </style>

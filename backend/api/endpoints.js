@@ -20,15 +20,17 @@ router.get('/perf', (req,res) => {
 
 // ROUTES CORRESPONDANT AUX REQUETES POUR LES GRAPHIQUES
 
+// Compte le nombre total d'employés
 router.get('/employe', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     res.status(200).json([dataEmploye.length]);
 });
 
+// Compte le nombre d'employés par catégorie
 router.get('/employe/:cat', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
-        res.status(400).send('Catégorie inexistante');
+        res.status(400); // Catégorie inexistante
         return;
     }
     let labels = [];
@@ -45,6 +47,7 @@ router.get('/employe/:cat', (req,res) => {
     res.status(200).send([labels, [{label:'Nombre',data:cpt}]]);
 });
 
+// Détermine le taux de participation moyen des employés
 router.get('/participate/', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     let datas = 0;
@@ -60,10 +63,11 @@ router.get('/participate/', (req,res) => {
     res.status(200).send([datas + " %"]);
 });
 
+// Détermine le taux de participation moyen des employés par catégorie
 router.get('/participate/:cat', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
-        res.status(400).send('Catégorie inexistante');
+        res.status(400) // Catégorie inexistante
         return;
     }
     let labels = [];
@@ -87,6 +91,7 @@ router.get('/participate/:cat', (req,res) => {
     res.status(200).send([labels, [{label:'Taux de participation',data:datas}]]);
 });
 
+// Détermine la performance moyenne des employés sur la période de la database
 router.get('/performance/', (req,res) => {
     let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
     let labels = [];
@@ -109,11 +114,12 @@ router.get('/performance/', (req,res) => {
     res.status(200).send([labels, [{label:'Global',data:datas}]]);
 });
 
+// Détermine la performance moyenne des employés par catégorie
 router.get('/performance/:cat', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');
     if (dataEmploye.length != 0 && !dataEmploye[0].hasOwnProperty(req.params.cat)){
-        res.status(400).send('Catégorie inexistante');
+        res.status(400) // Catégorie inexistante
         return;
     }
     let labels = [];
@@ -131,7 +137,7 @@ router.get('/performance/:cat', (req,res) => {
         }
         let emp = dataEmploye.find(employe => employe.id === item.employe_id);
         if (emp === null || emp === undefined){
-            res.status(409).send("Employé introuvable");
+            res.status(409); // Employé inexistant dans la database
             return;
         }
         let cat = emp[req.params.cat];
@@ -155,6 +161,7 @@ router.get('/performance/:cat', (req,res) => {
     res.status(200).send([labels, datas]);
 });
 
+// Place chaque employé en fonction de son taux de participation et son évolution sportive moyenne
 router.get('/perfpart', (req,res) => {
     let dataEmploye = Data.getCsv('../database/' + strEmploye + '.csv');
     let dataPerformance = Data.getCsv('../database/' + strPerformance + '.csv');

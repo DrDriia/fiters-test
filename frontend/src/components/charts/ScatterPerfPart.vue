@@ -8,7 +8,7 @@
 <script>
     const Data = require('../../js/getData');
 
-    const request = 'perfpart/';
+    const request = Data.PERFPART;
     const type = 'scatter';
     const label = ''
     var options = {
@@ -23,15 +23,14 @@
                             }
                         }
                     };
-    var actualCat = '';
 
     export default {
         name: 'ScatterPerfPart',
         async mounted(){
-            actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+            await Data.getData(Data.URL + request, type, options, label);
         }
     }
     setInterval(async function addData(){
-        actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+        await Data.getData(Data.URL + request, type, options, label);
     }, 1000);
 </script>

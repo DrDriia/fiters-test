@@ -8,9 +8,9 @@
 <script>
     const Data = require('../../js/getData');
 
-    const request = 'performance/';
+    const request = Data.PERFORMANCE;
     const type = 'line';
-    const label = 'Taux de participation moyen';
+    const label = 'Evolution sportive moyenne';
     var options = {
                     scales: {
                         y: {
@@ -21,19 +21,18 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Evolution sportive moyenne'
+                            text: label
                         }
                     }
                 };
-    var actualCat = '';
 
     export default {
         name: 'LinePerf',
         async mounted(){
-            actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+            await Data.getData(Data.URL + request, type, options, label);
         }
     }
     setInterval(async function addData(){
-        actualCat = await Data.getData(Data.URL + request, type, options, label, actualCat);
+        await Data.getData(Data.URL + request, type, options, label);
     }, 1000);
 </script>
